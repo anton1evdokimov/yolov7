@@ -25,6 +25,10 @@
 
 storage.googleapis.com
 runs/*
+yolo7_condit/*
+runs_conditioners/*
+dataset_yolo11/*
+dataset_condit/*
 data/*
 data/images/*
 !data/*.yaml

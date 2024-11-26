@@ -286,16 +286,30 @@ def test(data,
         maps[c] = ap[i]
     return (mp, mr, map50, map, *(loss.cpu() / len(dataloader)).tolist()), maps, t
 
+is_grz = True
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='test.py')
-    parser.add_argument('--weights', nargs='+', type=str, default='yolov7.pt', help='model.pt path(s)')
-    parser.add_argument('--data', type=str, default='data/coco.yaml', help='*.data path')
+    parser = argparse.ArgumentParser()
+    if is_grz:
+        parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp40/weights/best.pt', help='model.pt path(s)')
+        # parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp33/weights/best_exp33.pt', help='model.pt path(s)')
+        # parser.add_argument('--source', type=str, default='inference/images', help='source')  # file/folder, 0 for webcam
+        # parser.add_argument('--source', type=str, default='dataset_yolo11/images/val', help='source')  # file/folder, 0 for webcam
+        parser.add_argument('--data', type=str, default='data/data.yaml', help='*.data path')
+        parser.add_argument('--project', default='runs/test', help='save results to project/name')
+        parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
+        
+    else:
+        parser.add_argument('--weights', nargs='+', type=str, default='runs_conditioners/train/exp37/weights/best.pt', help='model.pt path(s)')
+        # parser.add_argument('--source', type=str, default='inference/images/condi', help='source')  # file/folder, 0 for webcam
+        parser.add_argument('--project', default='runs_conditioners/test', help='save results to project/name')
+        parser.add_argument('--img-size', type=int, default=1280, help='inference size (pixels)')
+        parser.add_argument('--data', type=str, default='data/data_condit.yaml', help='*.data path')
+
     parser.add_argument('--batch-size', type=int, default=32, help='size of each image batch')
-    parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
-    parser.add_argument('--conf-thres', type=float, default=0.001, help='object confidence threshold')
+    parser.add_argument('--conf-thres', type=float, default=0.3, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.65, help='IOU threshold for NMS')
-    parser.add_argument('--task', default='val', help='train, val, test, speed or study')
+    parser.add_argument('--task', default='test', help='train, val, test, speed or study')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--single-cls', action='store_true', help='treat as single-class dataset')
     parser.add_argument('--augment', action='store_true', help='augmented inference')
@@ -304,7 +318,6 @@ if __name__ == '__main__':
     parser.add_argument('--save-hybrid', action='store_true', help='save label+prediction hybrid results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
     parser.add_argument('--save-json', action='store_true', help='save a cocoapi-compatible JSON results file')
-    parser.add_argument('--project', default='runs/test', help='save to project/name')
     parser.add_argument('--name', default='exp', help='save to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--no-trace', action='store_true', help='don`t trace model')

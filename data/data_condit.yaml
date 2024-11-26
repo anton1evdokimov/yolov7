@@ -1,0 +1,7 @@
+names:
+- conditioner 
+nc: 1
+path: dataset_condit
+train: ./dataset_condit/images/train
+val: ./dataset_condit/images/val
+test: ./dataset_condit/images/val

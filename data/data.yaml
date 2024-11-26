@@ -1,0 +1,16 @@
+names:
+- simple 
+- taxi
+- square
+- red
+- black
+- blue
+- temporary
+- transit
+- special
+- no_vis
+nc: 10
+path: dataset_yolo11
+train: ./dataset_yolo11/images/train
+val: ./dataset_yolo11/images/val
+test: ./dataset_yolo11/images/test
